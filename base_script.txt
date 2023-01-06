@@ -1,0 +1,207 @@
+#!/bin/bash
+readarray -t newtcols < /etc/newt/palette
+
+newtcols_error=(
+root=white,gray
+window=gray,white
+border=white,magenta
+shadow=white,gray
+button=white,magenta
+actbutton=black,white
+compactbutton=black,lightgray
+title=magenta,
+roottext=black,magenta
+textbox=magenta,white
+acttextbox=black,white
+entry=lightgray,gray
+disentry=gray,lightgray
+checkbox=black,lightgray
+actcheckbox=black,lightgray
+emptyscale=,black
+fullscale=white,magenta
+listbox=black,lightgray
+actlistbox=white,lightgray
+actsellistbox=white,yellow
+)
+
+NEWT_COLORS="${newtcols[@]} ${newtcols_error[@]}" whiptail --title "Bash Calculator" --msgbox "Welcome to the bash calculator .. 💜" 15 80
+
+
+######################################################################
+########################### main menu function #######################
+
+function MainMenu() {
+
+    menu=$(NEWT_COLORS="${newtcols[@]} ${newtcols_error[@]}" whiptail --title "Bash Calculator" --fb  --cancel-button "Exit" --menu "Choose an option" 25 70 4 \
+        "1" "Start Calculator" \
+        "2" "Documentation" \
+         3>&1 1>&2 2>&3 )
+    if [ -z "$menu" ]
+    then 
+            if (NEWT_COLORS="${newtcols[@]} ${newtcols_error[@]}" whiptail --title "Exit" --yesno "Do you really want to exit the calculator? 😢 " 10 70)
+            then
+            exit
+            else
+            MainMenu
+            fi
+    else
+    case $menu in
+        1)            
+            calculations
+        ;;
+	2)
+            documentation
+        ;;
+    esac
+    fi
+}
+
+#########################################################################
+##################### documentation function ############################
+ #back
+function documentation {
+	
+	doc=$(NEWT_COLORS="${newtcols[@]} ${newtcols_error[@]}" whiptail --title "Documentation 📝" --cancel-button "🔙" --ok-button "🆗" --menu "Choose an option" 25 70 4 \
+        "1" "Calculator Manual" \
+        "2" "Authors" \
+        3>&1 1>&2 2>&3 )
+        
+        if [ -z "$doc" ]
+    	then 
+            MainMenu
+    	else
+
+        case $doc in
+        1)   
+                    
+            manual
+            ;;
+	2)
+         
+            authors
+            ;;
+    	esac
+	fi  
+}       
+
+####################### manual function ##################################
+function manual {
+
+	if (NEWT_COLORS="${newtcols[@]} ${newtcols_error[@]}" whiptail --title "Manual 📋" --yesno "How to use the calculator?
+        - To navigate through the calculator use the arrows ↑ ↓ → ←
+        - To exit the calculator choose the button 'Exit'.
+        - use Delete/Backspace to delete one character at a time from the right end or the left 
+        end of the display.
+        
+  	► Standard Calculator:
+  	- It is a simple basic calculator similar to a small handheld calculator. 
+  	- Use can use this basic calculator for math with addition, subtraction, division, 
+  	multiplication, power, and factorial.
+
+  	► Bitwise Calculator:
+  	- This calculator contains some of the bitwise operations and bit shifting.
+  	- Operations include: 
+  		1. Right Shift 2. Left Shift 3. AND  4. OR  5. XOR  6. NOT 	
+
+	► Programmer Calculator:
+	- This calculator claculates the conversions between different number systems.
+	- You can do all kinds of conversions between Binary, Octal, Decimal, and Hex-Decimal.
+	
+     	" 25 100 --yes-button "Back" --no-button "Exit") 
+        then
+	documentation
+        else
+	if (NEWT_COLORS="${newtcols[@]} ${newtcols_error[@]}" whiptail --title "Exit" --yesno "Do you really want to exit the calculator? 😢 " 25 70)
+            then
+            exit
+            else
+            manual
+            fi
+	fi
+}
+
+############################## authors function ##############################
+function authors {
+	if (NEWT_COLORS="${newtcols[@]} ${newtcols_error[@]}" whiptail --title "Team Members 👩‍💻" --yesno "
+	
+	- Made by: 
+	
+	►Esraa Adel: The Basic Script 
+        
+        ►Reham Ramadan: Bitwise Calculations
+        
+        ►Salma Amir: Programmer Calculations
+        
+        ►Samaa Hamdan: The Basic Script
+        
+        ►Shorok Alaa: Standard Calculations      
+
+     	" 25 80 --yes-button "Back" --no-button "Exit")
+        then
+	documentation
+        else
+	if (NEWT_COLORS="${newtcols[@]} ${newtcols_error[@]}" whiptail --title "Exit" --yesno "Do you really want to exit the calculator? 😢 " 10 70)
+            then
+            exit
+            else
+            authors
+            fi
+	fi
+	
+
+}
+
+
+function calculations {
+
+        calc=$(NEWT_COLORS="${newtcols[@]} ${newtcols_error[@]}" whiptail --title "Bash Calculator" --cancel-button "Back"  --menu "Choose the calculator type" 25 70 4 \
+            "1" "Standard" \
+            "2" "Bitwise" \
+            "3" "Programmer" \
+            3>&1 1>&2 2>&3)
+        ######check the user choice of it was cancel or not###################
+        if [ -z "$calc" ]  ###### the user choice was "back"
+        then
+        MainMenu
+        else              
+        case $calc in
+        1)
+            arithmeticmenu
+            ;;
+        2)
+            bitwise
+            ;;
+	3)
+            programmer
+            ;;
+	esac
+        fi
+}
+
+##########################################################################
+######################### standard function ############################
+
+function arithmeticmenu {
+
+}
+
+################### end of standard ###################################        
+
+#######################################################################
+######################### Bitwise calculations #####################
+
+function bitwise {
+
+}
+
+################################# end of bitwise####################################
+
+###################################################################################
+################################# programmer ######################################
+
+function programmer {
+
+}
+
+
+MainMenu
