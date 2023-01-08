@@ -58,14 +58,14 @@ fi
 ;;
 2)
 
-                Decimal=$(echo "ibase=2;$NUMBER"|bc)
-                Octal=$(echo "obase=8;ibase=2;$NUMBER"|bc)
-                Hexadecimal=$(echo "obase=16;ibase=2;$NUMBER"|bc)
+                Binary=$(echo "obase=2;$NUMBER"|bc)
+                Octal=$(echo "obase=8;$NUMBER"|bc)
+                Hexadecimal=$(echo "obase=16;$NUMBER"|bc)
 
               message="✨ Conversion for [$NUMBER] :-
 
-                        Decimal=$Decimal
-
+                        Binary=$Binary
+			
                         Octal=$Octal
 
                         Hexadecimal=$Hexadecimal"
