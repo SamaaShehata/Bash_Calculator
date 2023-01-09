@@ -1,5 +1,5 @@
 # Bash_Calculator
-This project is a basic calculator made with bash script using whiptail to make user friendly.
+This project is a basic calculator made with bash script using whiptail to make it user friendly.
 
 • Note: Before running the script, make sure to download the whiptail and dialog.
 
